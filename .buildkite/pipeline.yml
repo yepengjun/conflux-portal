@@ -1,0 +1,47 @@
+steps:
+  - key: "test-deps"
+    branches: "buildkite"
+    command: ".circleci/scripts/yarn-audit"
+
+  - key: "prep-deps"
+    branches: "buildkite"
+    command: ".circleci/scripts/deps-install.sh"
+
+  - wait
+
+  - key: "prep-scss"
+    branches: "buildkite"
+    depends_on: "prep-deps"
+    command:
+      - "find ui/app/css -type f -exec md5sum {} \\; | sort -k 2 > scss_checksum"
+      - "yarn test:integration:build"
+
+  - key: "prep-build-test"
+    branches: "buildkite"
+    depends_on: "prep-deps"
+    command:
+      - "yarn build:test"
+      - "mv ./dist ./dist-test"
+
+  # - key: "benchmark"
+  #   branches: "buildkite"
+  #   depends_on: "build-test"
+  #   command:
+  #     - "yarn benchmark:chrome --out test-artifacts/chrome/benchmark/pageload.json"
+  #     - "find dist/ -type f -exec md5sum {} \; | sort -k 2"
+
+  - key: "test-e2e-chrome"
+    branches: "buildkite"
+    depends_on: "build-test"
+    command:
+      - "yarn benchmark:chrome --out test-artifacts/chrome/benchmark/pageload.json"
+      - "find dist/ -type f -exec md5sum {} \\; | sort -k 2"
+
+  - wait
+
+  - key: "prep-build"
+    branches: "buildkite"
+    depends_on: "prep-deps"
+    command:
+      - "yarn dist"
+      - "find dist/ -type f -exec md5sum {} \\; | sort -k 2"
