@@ -271,7 +271,7 @@ async function estimateGasAndCollateral ({
     result.gas = BASE_TOKEN_GAS_COST
   }
 
-  if (!(!selectedToken && !data) || !(selectedToken && !to)) {
+  if (selectedToken || data || to) {
     if (selectedToken) {
       paramsForEstimate.value = '0x0'
       paramsForEstimate.data = generateTokenTransferData({
