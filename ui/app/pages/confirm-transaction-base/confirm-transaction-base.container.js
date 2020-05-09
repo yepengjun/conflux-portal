@@ -247,7 +247,7 @@ export const mapDispatchToProps = (dispatch) => {
   }
 }
 
-const getValidateEditGas = ({ balance, conversionRate, txData }) => {
+const getValidateEditGasAndCollateral = ({ balance, conversionRate, txData }) => {
   const { txParams: { value: amount } = {} } = txData
 
   return ({ gasLimit, gasPrice, storageLimit }) => {
@@ -307,7 +307,7 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
     ...otherDispatchProps
   } = dispatchProps
 
-  const validateEditGas = getValidateEditGas({
+  const validateEditGasAndCollateral = getValidateEditGasAndCollateral({
     balance,
     conversionRate,
     txData,
@@ -322,14 +322,14 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
         txData,
         onSubmit: (customGasAndCollateral) =>
           dispatchUpdateGasAndCollateralAndCalculate(customGasAndCollateral),
-        validate: validateEditGas,
+        validate: validateEditGasAndCollateral,
       }),
     showCustomizeStorageModal: () =>
       dispatchShowCustomizeStorageModal({
         txData,
         onSubmit: (customGasAndCollateral) =>
           dispatchUpdateGasAndCollateralAndCalculate(customGasAndCollateral),
-        validate: validateEditGas,
+        validate: validateEditGasAndCollateral,
       }),
     cancelAllTransactions: () =>
       dispatchCancelAllTransactions(valuesFor(unapprovedTxs)),

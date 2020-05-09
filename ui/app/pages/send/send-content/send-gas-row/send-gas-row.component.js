@@ -79,7 +79,7 @@ export default class SendGasRow extends Component {
     })
   }
 
-  renderContent () {
+  renderContent (showInputType = 'all') {
     const {
       isSimpleTx,
       gasLoadingError,
@@ -159,6 +159,7 @@ export default class SendGasRow extends Component {
           customPriceIsSafe
           isSimpleTx={isSimpleTx}
           isSpeedUp={false}
+          showInputType={showInputType}
         />
         {this.renderAdvancedOptionsButton()}
       </div>
@@ -174,16 +175,38 @@ export default class SendGasRow extends Component {
   }
 
   render () {
-    const { gasAndCollateralFeeError } = this.props
+    const {
+      gasAndCollateralFeeError,
+      isSimpleTx,
+      advancedInlineGasShown,
+    } = this.props
 
-    return (
+    const gasFeeRow = (
       <SendRowWrapper
+        key="fee"
         label={`${this.context.t('transactionFee')}:`}
         showError={gasAndCollateralFeeError}
         errorType="gasAndCollateralFee"
       >
-        {this.renderContent()}
+        {this.renderContent('fee')}
       </SendRowWrapper>
     )
+    if (!advancedInlineGasShown) {
+      return gasFeeRow
+    }
+
+    return [
+      gasFeeRow,
+      advancedInlineGasShown && !isSimpleTx && (
+        <SendRowWrapper
+          key="collateral"
+          label={`${this.context.t('transactionCollateral')}:`}
+          showError={gasAndCollateralFeeError}
+          errorType="gasAndCollateralFee"
+        >
+          {this.renderContent('collateral')}
+        </SendRowWrapper>
+      ),
+    ]
   }
 }

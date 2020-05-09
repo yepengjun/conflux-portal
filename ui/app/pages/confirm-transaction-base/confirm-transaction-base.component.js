@@ -264,6 +264,7 @@ export default class ConfirmTransactionBase extends Component {
           <div className="confirm-page-container-content__gas-fee">
             <ConfirmDetailRow
               label="Gas Fee"
+              type="fee"
               value={hexTransactionFee}
               headerText={advancedInlineGasShown ? '' : 'Edit'}
               headerTextClassName="confirm-detail-row__header-text--edit"
@@ -279,13 +280,22 @@ export default class ConfirmTransactionBase extends Component {
             {advancedInlineGasShown ? (
               <AdvancedGasInputs
                 updateCustomGasPrice={(newGasPrice) =>
-                  updateGasAndCollateralAndCalculte({ ...customGasAndCollateral, gasPrice: newGasPrice })
+                  updateGasAndCollateralAndCalculte({
+                    ...customGasAndCollateral,
+                    gasPrice: newGasPrice,
+                  })
                 }
                 updateCustomGasLimit={(newGasLimit) =>
-                  updateGasAndCollateralAndCalculte({ ...customGasAndCollateral, gasLimit: newGasLimit })
+                  updateGasAndCollateralAndCalculte({
+                    ...customGasAndCollateral,
+                    gasLimit: newGasLimit,
+                  })
                 }
                 updateCustomStorageLimit={(newStorageLimit) =>
-                  updateGasAndCollateralAndCalculte({ ...customGasAndCollateral, storageLimit: newStorageLimit })
+                  updateGasAndCollateralAndCalculte({
+                    ...customGasAndCollateral,
+                    storageLimit: newStorageLimit,
+                  })
                 }
                 customGasPrice={customGasAndCollateral.gasPrice}
                 customGasLimit={customGasAndCollateral.gasLimit}
@@ -294,6 +304,55 @@ export default class ConfirmTransactionBase extends Component {
                 customPriceIsSafe
                 isSpeedUp={false}
                 isSimpleTx={isSimpleTx}
+                showInputType="fee"
+              />
+            ) : null}
+            {!isSimpleTx && (
+              <ConfirmDetailRow
+                label="Storage Collateral"
+                type="collateral"
+                value={hexTransactionFee}
+                headerText={advancedInlineGasShown ? '' : 'Edit'}
+                headerTextClassName="confirm-detail-row__header-text--edit"
+                onHeaderClick={() =>
+                  !advancedInlineGasShown && this.handleEditGas()
+                }
+                secondaryText={
+                  hideFiatConversion
+                    ? this.context.t('noConversionRateAvailable')
+                    : ''
+                }
+              />
+            )}
+            {advancedInlineGasShown ? (
+              <AdvancedGasInputs
+                key="collateral"
+                updateCustomGasPrice={(newGasPrice) =>
+                  updateGasAndCollateralAndCalculte({
+                    ...customGasAndCollateral,
+                    gasPrice: newGasPrice,
+                  })
+                }
+                updateCustomGasLimit={(newGasLimit) =>
+                  updateGasAndCollateralAndCalculte({
+                    ...customGasAndCollateral,
+                    gasLimit: newGasLimit,
+                  })
+                }
+                updateCustomStorageLimit={(newStorageLimit) =>
+                  updateGasAndCollateralAndCalculte({
+                    ...customGasAndCollateral,
+                    storageLimit: newStorageLimit,
+                  })
+                }
+                customGasPrice={customGasAndCollateral.gasPrice}
+                customGasLimit={customGasAndCollateral.gasLimit}
+                customStorageLimit={customGasAndCollateral.storageLimit}
+                insufficientBalance={insufficientBalance}
+                customPriceIsSafe
+                isSpeedUp={false}
+                isSimpleTx={isSimpleTx}
+                showInputType="collateral"
               />
             ) : null}
           </div>

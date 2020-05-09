@@ -51,7 +51,7 @@ const mapStateToProps = (state, ownProps) => {
   )
   const { rpcPrefs } = selectRpcInfo || {}
 
-  const hasEnoughCancelGas =
+  const hasEnoughCancelGasAndCollateral =
     primaryTransaction.txParams &&
     isBalanceSufficient({
       amount: '0x0',
@@ -70,7 +70,7 @@ const mapStateToProps = (state, ownProps) => {
     methodData: getKnownMethodData(state, data) || {},
     showFiat: isMainnet || !!showFiatInTestnets,
     selectedAccountBalance,
-    hasEnoughCancelGas,
+    hasEnoughCancelGasAndCollateral,
     rpcPrefs,
     isDeposit,
     transactionTimeFeatureActive,
