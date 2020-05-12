@@ -12,7 +12,7 @@ import { hexToDecimal } from '../../../helpers/utils/conversions.util'
 import { getTokenData } from '../../../helpers/utils/transactions.util'
 import {
   increaseLastGasPrice,
-  getHexGasAndCollateralTotal,
+  getHexGasTotal,
 } from '../../../helpers/utils/confirm-tx.util'
 import { formatDate } from '../../../helpers/utils/util'
 import {
@@ -40,7 +40,7 @@ const mapStateToProps = (state, ownProps) => {
   const isMainnet = getIsMainnet(state)
   const { transactionGroup: { primaryTransaction } = {} } = ownProps
   const {
-    txParams: { storageLimit, gas: gasLimit, gasPrice, data } = {},
+    txParams: { gas: gasLimit, gasPrice, data } = {},
     transactionCategory,
   } = primaryTransaction
   const selectedAddress = getSelectedAddress(state)
@@ -55,8 +55,7 @@ const mapStateToProps = (state, ownProps) => {
     primaryTransaction.txParams &&
     isBalanceSufficient({
       amount: '0x0',
-      gasAndCollateralTotal: getHexGasAndCollateralTotal({
-        storageLimit,
+      gasTotal: getHexGasTotal({
         gasPrice: increaseLastGasPrice(gasPrice),
         gasLimit,
       }),

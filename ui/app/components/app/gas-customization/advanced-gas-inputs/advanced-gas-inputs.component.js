@@ -255,7 +255,7 @@ export default class AdvancedGasInputs extends Component {
     } = this.storageLimitError({ insufficientBalance })
     const storageLimitErrorComponent = storageLimitErrorType ? (
       <div
-        className={`advanced-storage-inputs__storage-edit-row__${storageLimitErrorType}-text`}
+        className={`advanced-gas-inputs__gas-edit-row__${storageLimitErrorType}-text`}
       >
         {storageLimitErrorText}
       </div>

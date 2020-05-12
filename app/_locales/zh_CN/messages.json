@@ -1380,5 +1380,8 @@
   },
   "restrictedMethods_eth_accounts": {
     "message": "查看已选中账户的地址"
+  },
+  "alreadySponsoredByContract": {
+    "message": " 已由合约代付"
   }
 }

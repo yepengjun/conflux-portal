@@ -15,6 +15,8 @@ const ConfirmDetailRow = (props) => {
     headerTextClassName,
     value,
     type = 'fee',
+    primaryPrefix,
+    primaryPrefixStyle = {},
   } = props
 
   return (
@@ -31,24 +33,34 @@ const ConfirmDetailRow = (props) => {
           >
             {headerText}
           </div>
-          {primaryText ? (
-            <div
-              className="confirm-detail-row__primary"
-              style={{ color: primaryValueTextColor }}
-            >
-              {primaryText}
-            </div>
-          ) : (
-            <UserPreferencedCurrencyDisplay
-              className="confirm-detail-row__primary"
-              type={PRIMARY}
-              value={value}
-              showEthLogo
-              ethLogoHeight="18"
-              style={{ color: primaryValueTextColor }}
-              hideLabel
-            />
-          )}
+          <div className="confirm-detail-row__primary-group">
+            {primaryPrefix && (
+              <div
+                className="confirm-detail-row__primary-prefix"
+                style={ primaryPrefixStyle }
+              >
+                { primaryPrefix }
+              </div>
+            )}
+            {primaryText ? (
+              <div
+                className="confirm-detail-row__primary"
+                style={{ color: primaryValueTextColor }}
+              >
+                {primaryText}
+              </div>
+            ) : (
+              <UserPreferencedCurrencyDisplay
+                className="confirm-detail-row__primary"
+                type={PRIMARY}
+                value={value}
+                showEthLogo
+                ethLogoHeight="18"
+                style={{ color: primaryValueTextColor }}
+                hideLabel
+              />
+            )}
+          </div>
           {secondaryText ? (
             <div className="confirm-detail-row__secondary">{secondaryText}</div>
           ) : (
@@ -76,6 +88,8 @@ ConfirmDetailRow.propTypes = {
   secondaryText: PropTypes.string,
   value: PropTypes.string,
   type: PropTypes.oneOf(['fee', 'collateral']),
+  primaryPrefix: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  primaryPrefixStyle: PropTypes.object,
 }
 
 export default ConfirmDetailRow

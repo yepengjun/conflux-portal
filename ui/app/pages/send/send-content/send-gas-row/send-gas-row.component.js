@@ -13,7 +13,6 @@ export default class SendGasRow extends Component {
     gasLoadingError: PropTypes.bool,
     gasTotal: PropTypes.string,
     storageTotal: PropTypes.string,
-    gasAndCollateralTotal: PropTypes.string,
     maxModeOn: PropTypes.bool,
     showCustomizeGasModal: PropTypes.func,
     selectedToken: PropTypes.object,
@@ -65,7 +64,7 @@ export default class SendGasRow extends Component {
   setMaxAmount () {
     const {
       balance,
-      gasAndCollateralTotal,
+      gasTotal,
       selectedToken,
       setAmountToMax,
       tokenBalance,
@@ -73,7 +72,7 @@ export default class SendGasRow extends Component {
 
     setAmountToMax({
       balance,
-      gasAndCollateralTotal,
+      gasAndCollateralTotal: gasTotal,
       selectedToken,
       tokenBalance,
     })
@@ -85,7 +84,6 @@ export default class SendGasRow extends Component {
       gasLoadingError,
       gasTotal,
       storageTotal,
-      gasAndCollateralTotal,
       showCustomizeGasModal,
       gasPriceButtonGroupProps,
       gasButtonGroupShown,
@@ -130,7 +128,7 @@ export default class SendGasRow extends Component {
         gasLoadingError={gasLoadingError}
         gasTotal={gasTotal}
         storageTotal={storageTotal}
-        gasAndCollateralTotal={gasAndCollateralTotal}
+        gasAndCollateralTotal={gasTotal}
         onReset={() => {
           resetGasButtons()
           if (maxModeOn) {

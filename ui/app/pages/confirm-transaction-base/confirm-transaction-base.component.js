@@ -109,6 +109,7 @@ export default class ConfirmTransactionBase extends Component {
     tryReverseResolveAddress: PropTypes.func.isRequired,
     hideSenderToRecipient: PropTypes.bool,
     showAccountInHeader: PropTypes.bool,
+    hexSponsoredTransactionFee: PropTypes.string,
   }
 
   state = {
@@ -266,6 +267,7 @@ export default class ConfirmTransactionBase extends Component {
               label="Gas Fee"
               type="fee"
               value={hexTransactionFee}
+              primaryPrefix={this.renderSponsoredTxFee()}
               headerText={advancedInlineGasShown ? '' : 'Edit'}
               headerTextClassName="confirm-detail-row__header-text--edit"
               onHeaderClick={() =>
@@ -614,6 +616,22 @@ export default class ConfirmTransactionBase extends Component {
           }
         })
       }
+    )
+  }
+
+  renderSponsoredTxFee () {
+    const { hexSponsoredTransactionFee } = this.props
+
+    return (
+      <div style={{ display: 'flex', fontSize: '0.7rem', color: '#2F9AE0' }}>
+        {`${this.context.t('alreadySponsoredByContract')}\u00a0`}
+        <UserPreferencedCurrencyDisplay
+          value={hexSponsoredTransactionFee}
+          type={PRIMARY}
+          hideLabel
+        />
+        {`\u00a0CFX\u00a0`}
+      </div>
     )
   }
 

@@ -1666,5 +1666,8 @@
   },
   "restrictedMethods_eth_accounts": {
     "message": "Read the address of the selected account"
+  },
+  "alreadySponsoredByContract": {
+    "message": "Smart contract sponsored"
   }
 }
